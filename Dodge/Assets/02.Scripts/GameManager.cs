@@ -37,11 +37,34 @@ public class GameManager : MonoBehaviour
             // 갱신한 생존 시간을 timetext 컴포넌트를 이용해 표시
             timeText.text = "Time : " + (int)surviveTime;
         }
+       else
+        {
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene("SampleScene");
+            }
+        }
+
     }
     // 현재 게임을 게임오버 상태로 변경하는 메서드
     public void EndGame()
     {
+        // 현재 상태를 게임오버 상태로 전환
         isGameover = true;
+        // 게임오버 텍스트 GameObject를 활성화(true)/비활성화(false) 진행
+        gameObjectText.SetActive(true);
 
+        float bestTime = PlayerPrefs.GetFloat("BestTime");
+
+        if(bestTime < surviveTime)
+        {
+
+            bestTime = surviveTime;
+
+            PlayerPrefs.SetFloat("BestTime", bestTime);
+
+        }
+
+        recordText.text = "Best Time: " + (int)bestTime;
     }
 }
